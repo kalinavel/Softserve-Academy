@@ -8,10 +8,10 @@ function shortestWord(strWords) {
 
     let stringArray = strWords.split(" ");
     
-    let orderedArray = stringArray.sort((a, b) => {
+    stringArray.sort((a, b) => {
           return a.length - b.length;
         })
-        return orderedArray[0].length;
+        return stringArray[0].length;
 }
 
 console.log(shortestWord("bitcoin take over the world maybe who knows perhaps"));
