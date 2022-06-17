@@ -6,15 +6,17 @@
 // to contain only alphabets (both uppercase and lowercase) and numeric digits.
 
 function countDuplicates(input) {
-
-    let oneCharacterArray = input.toLowerCase().split("");
-    let countObj = {};
-
-    oneCharacterArray.forEach(element => {
-        countObj[element] = (countObj[element] || 0) + 1;
-    });
     
-    return countObj;
+    let splitArray = input.toLowerCase().split("");
+    let filteredArray = splitArray.filter((item, index) => splitArray.indexOf(item) !== index);
+    return [... new Set(filteredArray)].length;
+
 }
 
+console.log(countDuplicates("abcde"));
+console.log(countDuplicates("aabbcde"));
+console.log(countDuplicates("aabBcde"));
 console.log(countDuplicates("indivisibility"));
+console.log(countDuplicates("Indivisibilities"));
+console.log(countDuplicates("aA11"));
+console.log(countDuplicates("ABBA"));
