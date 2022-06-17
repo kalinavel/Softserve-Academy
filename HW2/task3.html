@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic light button</title>
+    <style>
+        .container {
+            background-color: antiquewhite;
+        }
+
+        .traffic-light {
+            height: 17vh;
+            width: 24vw;
+            display: inline-block;
+            margin: 3vh;
+            margin-right: 1%;
+            vertical-align: middle;
+            position: relative;
+
+            border: 3px darkgray solid;
+            border-radius: 5%;
+        }
+
+        .traffic-light > div {
+            height: 11vh;
+            width: 11vh;
+
+            float: left;
+            margin-left: 1vw;
+            margin-top: 3.4vh;
+            margin-inline-start: 1.2vw;
+            
+            border-radius: 100%;
+            background-color: darkgray;
+        }
+
+        .container > button {
+            height: 17vh;
+            width: 7vw;
+            display: inline-block;
+            margin: 3vh;
+            margin-left: 0;
+            vertical-align: bottom;
+
+            border: transparent;
+            border-radius: 5%;
+            box-shadow: 3px 3px #888888;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 1.5em;
+            font-weight: 500;
+
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="traffic-light">
+            <div id= "first-light"></div>
+            <div id = "second-light"></div>
+            <div id = "third-light"></div>
+        </div>
+        <button type="button">NEXT</button>
+    </div>
+    <script>
+        const btn = document.querySelector('button');
+        let first_light = document.getElementById('first-light');
+            
+        
+            function trafficLightSwitch(event) {
+
+                let clickCounter = 0;
+                first_light.style.backgroundColor = "orange";
+                clickCounter++;
+                // if (clickCounter == 2) {
+                //     document.getElementById("second-light").style.backgroundColor = "orange";
+                // }
+                // clickCounter++;
+                // if (clickCounter == 2) {
+                //     document.getElementById("third-light").style.backgroundColor = "orange";
+                // }
+            }
+            
+        btn.addEventListener('click', trafficLightSwitch);
+    </script>
+</body>
+</html>
