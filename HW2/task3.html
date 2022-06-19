@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traffic light button</title>
+    <title>Traffic Light Change by Button</title>
     <style>
+        body {
+            margin: 0;
+        }
+
         .container {
-            background-color: antiquewhite;
+            background-color: #fff4d9;
         }
 
         .traffic-light {
             height: 17vh;
-            width: 24vw;
+            width: 26vw;
             display: inline-block;
             margin: 3vh;
             margin-right: 1%;
             vertical-align: middle;
             position: relative;
 
-            border: 3px darkgray solid;
-            border-radius: 5%;
+            border: 3px #888888 solid;
+            border-radius: 20px;
         }
 
         .traffic-light > div {
@@ -29,16 +33,26 @@
 
             float: left;
             margin-left: 1vw;
-            margin-top: 3.4vh;
-            margin-inline-start: 1.2vw;
+            margin-top: 3.3vh;
+            margin-inline-start: 1.8vw;
             
             border-radius: 100%;
-            background-color: darkgray;
+            background-color: #888888;
+        }
+
+        .light.red {
+            background-color: #bf2424;
+        }
+        .light.yellow {
+            background-color: #d7e632;
+        }
+        .light.green {
+            background-color: #18662c;
         }
 
         .container > button {
             height: 17vh;
-            width: 7vw;
+            width: 7.5vw;
             display: inline-block;
             margin: 3vh;
             margin-left: 0;
@@ -51,39 +65,37 @@
             font-size: 1.5em;
             font-weight: 500;
 
-            background-color: lightgray;
+            background-color: #d0d2db;
         }
+        
     </style>
 </head>
 <body>
     <div class="container">
         <div class="traffic-light">
-            <div id= "first-light"></div>
-            <div id = "second-light"></div>
-            <div id = "third-light"></div>
+            <div class = "light red" color = "red"></div>
+            <div class = "light" color = "yellow"></div>
+            <div class = "light" color = "green"></div>
         </div>
         <button type="button">NEXT</button>
     </div>
     <script>
         const btn = document.querySelector('button');
-        let first_light = document.getElementById('first-light');
-            
+        const lights = document.querySelectorAll('.light');
+        let activeLight = 0;
         
-            function trafficLightSwitch(event) {
+        btn.addEventListener('click', function trafficLightSwitch() {
+            lights[activeLight].className = 'light';
+            activeLight++;
 
-                let clickCounter = 0;
-                first_light.style.backgroundColor = "orange";
-                clickCounter++;
-                // if (clickCounter == 2) {
-                //     document.getElementById("second-light").style.backgroundColor = "orange";
-                // }
-                // clickCounter++;
-                // if (clickCounter == 2) {
-                //     document.getElementById("third-light").style.backgroundColor = "orange";
-                // }
+            if (activeLight > 2) {
+                activeLight = 0;
             }
-            
-        btn.addEventListener('click', trafficLightSwitch);
+
+            const currentLight = lights[activeLight];
+
+            currentLight.classList.add(currentLight.getAttribute('color'));    
+        });
     </script>
 </body>
 </html>
