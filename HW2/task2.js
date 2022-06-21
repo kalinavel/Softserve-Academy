@@ -1,88 +1,95 @@
 function ticTacToeChecker(board) {
+
+    // get the horizontals
+    let horizontal1 = board[0];
+    let horizontal2 = board[1];
+    let horizontal3 = board[2];
     
-    //Navigate the board horizontally
-    const isHorizontalWinner = (symbol, board) => {
-        return board.some((moves) => moves.every((move) => move === symbol));
-    }
-   // Next, let's check if the player has won Vertically (Columns)
-    const transposeBoard = (board) => {
-        return board.map((_,index) => board.map((row) => row[index]));
-    }
-    const isVerticalWinner = (symbol, board) => {
-        return transposeBoard(board).some((moves) => moves.every((move) => move === symbol));
-    }
-    // Get diagonal moves from the board  This will be used to check if a particular user has won //diagonally
-    const getDiagonalMoves = (board) => {
+    // get the verticals
+    let vertical1 = [];
+    vertical1.push(horizontal1[0], horizontal2[0], horizontal3[0]);
+    let vertical2 = [];
+    vertical2.push(horizontal1[1], horizontal2[1], horizontal3[1]);
+    let vertical3 = [];
+    vertical3.push(horizontal1[2], horizontal2[2], horizontal3[2]);
+    const verticals = [];
+    verticals.push(vertical1, vertical2, vertical3);
 
-        const diagonalMoves = [];
-        const equalBasedDiagonal = []; // i === j
-        const sumBasedDiagonal = [] // i + j == n -1 
-        
-        // Check for left to right diagonal moves
-        for(let row = 0; row < board.length; row++){
-          for (col = 0; col < board.length; col++) {
-            if (row === col) {
-              equalBasedDiagonal.push(board[row][col]);
+    // get the diagonals
+    let diagonal1 = [];
+    diagonal1.push(horizontal1[0],horizontal2[1], horizontal3[2]);
+    let diagonal2 = [];
+    diagonal2.push(horizontal1[2],horizontal2[1], horizontal3[0]);
+
+    // check if there is a win within the horizontals
+    let checkHorizontals = (() => {
+        for (let i = 0; i < board.length; i++) {
+            const horizontal = board[i];
+
+            const checkWinnerHorizontal = horizontal.every(element => {
+                if (element === horizontal[0]) {
+                    return true;
+                }
+            });
+            if (checkWinnerHorizontal && (horizontal[0] !== 0)) {
+                return horizontal[0];
             }
-          }
         }
+    })();
     
-        // Check for right to left diagonal moves
-        for(let row = 0; row < board.length; row++){
-          for (col = 0; col < board.length; col++) {
-            if (row + col === board.length -1 ) {
-              sumBasedDiagonal.push(board[row][col]);
+    // check if there is a win within the verticals
+    let checkVerticals = (() => {
+        for (let index = 0; index < verticals.length; index++) {
+            const vertical = verticals[index];
+            
+            const checkWinnerVertical = vertical.every(element => {
+                if (element === vertical[0]) {
+                    return true;
+                }
+            });
+            if (checkWinnerVertical && (vertical[0] !== 0)) {
+                return vertical[0];
             }
-          }
         }
-  
-        diagonalMoves.push(equalBasedDiagonal,sumBasedDiagonal);
-        return diagonalMoves;
+    })();
+
+    // check if there is a win within the diagonals
+    let checkDiagonal1 = (() => {
+
+        const checkWinnerDiagonal1 = diagonal1.every(element => {
+            if (element === diagonal1[0]) {
+                return true;
+            }
+        });
+        if (checkWinnerDiagonal1 && (diagonal1[0] !== 0)) {
+            return diagonal1[0];
+        }
+    })();
+
+    let checkDiagonal2 = (() => {
+
+        const checkWinnerDiagonal2 = diagonal2.every(element => {
+            if (element === diagonal2[0]) {
+                return true;
+            }
+        });
+        if (checkWinnerDiagonal2 && (diagonal2[0] !== 0)) {
+            return diagonal2[0];
+        }
+    })();
+
+    // show the result of the game (winner or game not finished)
+    if (checkHorizontals || checkVerticals || checkDiagonal1 || checkDiagonal2) {
+        return checkHorizontals || checkVerticals || checkDiagonal1 || checkDiagonal2;
     }
-
-    // Use the diagonal moves to check if the user is a winner
-    const isDiagonalWinner = (symbol,board) => {
-        return getDiagonalMoves(board).some((moves) => moves.every((move) => move === symbol));
+    else {
+        return -1;
     }
-
-    // Check the winner
-    const isWinner = (symbol,board) => {
-    isHorizontalWinner(symbol,board) || isVerticalWinner(symbol,board) || isDiagonalWinner(symbol,board)
-    }
-
-    // Check if all the moves have been filled 
-    const isGameOver = (board) => {board.every((row) => row.every((move) => !!move))}
-
-    // the main function to check for game winner 
-    // row & col indicates user moves (position)
-
-~   const play = function([row, col], symbol) {
-
-        if (isGameOver(board)) {
-            console.log('Game over');
-            return;
-        }
-
-        if (board[row][col]) {
-            console.log(`Choose another position.`);
-            return;
-        }
-        else {
-            board[row][col] = player;
-        }
-
-        if (isWinner(player, board)) {
-            console.log(`Player with ${symbol} WON!`);
-        }
-        else {
-            console.log('Go on');
-        }
-    };
-
-        while(!isGameOver(board)) {
-            play([row,col],symbol);
-        }
 }
 
 console.log(ticTacToeChecker([[0, 0, 1],[0, 1, 2],[2, 1, 0]]));
-console.log(ticTacToeChecker([[1, 2, 0],[0, 1, 2],[1, 1, 1]]));
+console.log(ticTacToeChecker([[1, 2, 0],[0, 1, 2],[2, 2, 2]]));
+console.log(ticTacToeChecker([[2, 1, 1],[0, 1, 2],[0, 1, 2]]));
+console.log(ticTacToeChecker([[1, 2, 0],[1, 0, 1],[2, 2, 0]]));
+console.log(ticTacToeChecker([[1, 0, 2],[0, 1, 2],[0, 2, 1]]));
+
